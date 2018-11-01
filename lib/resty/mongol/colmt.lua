@@ -277,4 +277,16 @@ function colmethods:find_one(query, returnfields)
     return nil
 end
 
+-- see https://docs.mongodb.com/manual/reference/command/findAndModify
+function colmethods:find_and_modify(options)
+    assert(options.query)
+    assert(options.update or options.remove)
+    options.findAndModify = self.col
+    local doc,err = self.db_obj:cmd(attachpairs_start(options,"findAndModify"))
+    if not doc then
+        return nil,err
+    end
+    return doc.value
+end
+
 return colmt
