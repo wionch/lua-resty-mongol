@@ -102,7 +102,7 @@ function dbmethods:auth_scram_sha1(username, password)
     local first_bare = "n="  .. user .. ",r="  .. nonce
     local sasl_start_payload = ngx.encode_base64("n,," .. first_bare)
     
-    r, err = self:cmd(attachpairs_start({
+    local r, err = self:cmd(attachpairs_start({
             saslStart = 1 ;
             mechanism = "SCRAM-SHA-1" ;
             autoAuthorize = 1 ;
